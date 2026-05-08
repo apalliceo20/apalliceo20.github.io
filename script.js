@@ -1,12 +1,12 @@
 // Valores editables para enlaces y canales oficiales de APAL.
 const SITE_LINKS = {
-  EMAIL_APAL: "apalliceo20@gmail.com",
+  EMAIL_APAL: "apal.liceo20.joaquintorresgarcia@gmail.com",
   INSTAGRAM_APAL: "https://instagram.com/apalliceo20",
   LINK_COMUNIDAD_WHATSAPP: "#",
   LINK_GOOGLE_GROUPS_FAMILIAS: "#",
-  LINK_FORMULARIO_REGISTRO_FAMILIAS: "#",
-  LINK_FORMULARIO_VOLUNTARIOS: "#",
-  LINK_FORMULARIO_APORTES: "#",
+  LINK_FORMULARIO_REGISTRO_FAMILIAS: "https://forms.gle/ooqPR1YevR6ezPcj9",
+  LINK_FORMULARIO_VOLUNTARIOS: "https://forms.gle/cNu3qokjgbiciMjz5",
+  LINK_FORMULARIO_APORTES: "https://forms.gle/4tnmq15Fd7Cetu4W7",
   LINK_FORMULARIO_CONTACTO: "#",
   LINK_CARPETA_RENDICIONES_DRIVE: "#",
 };
