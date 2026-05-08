@@ -11,6 +11,12 @@ const SITE_LINKS = {
   LINK_CARPETA_RENDICIONES_DRIVE: "#",
 };
 
+// Datos editables para mostrar canales de aporte economico.
+const DONATION_INFO = {
+  BROU_ACCOUNT_NUMBER: "[NUMERO_CUENTA_BROU]",
+  BROU_ACCOUNT_OWNER: "APAL Liceo 20",
+};
+
 function applyEditableLinks() {
   const externalNodes = document.querySelectorAll("[data-link-key]");
   externalNodes.forEach((node) => {
@@ -59,6 +65,19 @@ function applyEditableLinks() {
   }
 }
 
+function applyDonationInfo() {
+  const accountNumber = document.getElementById("brouAccountNumber");
+  const accountOwner = document.getElementById("brouAccountOwner");
+
+  if (accountNumber) {
+    accountNumber.textContent = DONATION_INFO.BROU_ACCOUNT_NUMBER;
+  }
+
+  if (accountOwner) {
+    accountOwner.textContent = DONATION_INFO.BROU_ACCOUNT_OWNER;
+  }
+}
+
 function setupMobileMenu() {
   const menuButton = document.getElementById("menuToggle");
   const navLinks = document.getElementById("navLinks");
@@ -88,5 +107,6 @@ function setCurrentYear() {
 }
 
 applyEditableLinks();
+applyDonationInfo();
 setupMobileMenu();
 setCurrentYear();
