@@ -6,28 +6,64 @@ Sitio web estático para **APAL Liceo 20** (Asociación de Padres de Alumnos), d
 
 - `index.html`
 - `styles.css`
+- `config.js`
 - `script.js`
 - `assets/banner-apal-liceo20.png`
+- `.github/workflows/deploy-pages.yml`
 
-## Contenido editable rápido
+## Configuración del sitio
 
-Los enlaces y canales de contacto se editan en el objeto `SITE_LINKS` dentro de `script.js`:
+Los valores ahora se cargan desde `config.js` (runtime config).
+
+- En local: podés editar `config.js`.
+- En producción: el workflow de GitHub Pages sobreescribe `config.js` con variables/secrets del repositorio.
+
+`script.js` contiene solo defaults de respaldo.
+
+### Variables recomendadas en GitHub
+
+Ir a **Settings > Secrets and variables > Actions** y crear:
+
+Variables (Repository variables):
+
+- `EMAIL_APAL`
+- `INSTAGRAM_APAL`
+- `LINK_COMUNIDAD_WHATSAPP`
+- `LINK_GOOGLE_GROUPS_FAMILIAS`
+- `LINK_FORMULARIO_REGISTRO_FAMILIAS`
+- `LINK_FORMULARIO_VOLUNTARIOS`
+- `LINK_FORMULARIO_APORTES`
+- `LINK_FORMULARIO_CONTACTO`
+- `LINK_CARPETA_RENDICIONES_DRIVE`
+- `BROU_ACCOUNT_OWNER`
+- `OFFICIAL_SITE_URL`
+- `OFFICIAL_INSTAGRAM_URL`
+- `TRUSTED_HOSTS_JSON` (ejemplo: `["apalliceo20.github.io","localhost","127.0.0.1"]`)
+- `HIDE_ACCOUNT_ON_UNTRUSTED_HOST` (`true` o `false`)
+- `ENFORCE_HTTPS` (`true` o `false`)
+- `MONTHLY_VERIFICATION_MONTH` (ejemplo: `Mayo 2026`)
+
+Secrets (Repository secrets):
+
+- `BROU_ACCOUNT_NUMBER`
+- `MONTHLY_VERIFICATION_CODE`
+
+Ejemplo de `config.js` local:
 
 ```js
-const SITE_LINKS = {
-  EMAIL_APAL: "apalliceo20@gmail.com",
-  INSTAGRAM_APAL: "https://instagram.com/apalliceo20",
-  LINK_COMUNIDAD_WHATSAPP: "#",
-  LINK_GOOGLE_GROUPS_FAMILIAS: "#",
-  LINK_FORMULARIO_REGISTRO_FAMILIAS: "#",
-  LINK_FORMULARIO_VOLUNTARIOS: "#",
-  LINK_FORMULARIO_APORTES: "#",
-  LINK_FORMULARIO_CONTACTO: "#",
-  LINK_CARPETA_RENDICIONES_DRIVE: "#",
+window.__APAL_CONFIG__ = {
+  SITE_LINKS: {
+    EMAIL_APAL: "[EMAIL_APAL]",
+    INSTAGRAM_APAL: "[INSTAGRAM_APAL]",
+  },
+  DONATION_INFO: {
+    BROU_ACCOUNT_NUMBER: "[NUMERO_CUENTA_BROU]",
+  },
+  SECURITY_CONFIG: {
+    MONTHLY_VERIFICATION_CODE: "[CODIGO_VERIFICACION_MENSUAL]",
+  },
 };
 ```
-
-Reemplazar `#` por las URLs reales de Google Forms, Drive y canales de comunicación.
 
 ## Banner institucional
 
@@ -41,10 +77,12 @@ Guardar el banner con este nombre exacto:
 2. Subir todos los archivos al branch `main`.
 3. Ir a **Settings > Pages** en GitHub.
 4. En **Build and deployment**, elegir:
-   - **Source:** `Deploy from a branch`
-   - **Branch:** `main` y carpeta `/ (root)`
-5. Guardar y esperar la publicación.
-6. El sitio quedará accesible en `https://USUARIO.github.io/` o en el dominio del repositorio de páginas.
+
+- **Source:** `GitHub Actions`
+
+5. Cargar las variables y secrets en **Settings > Secrets and variables > Actions**.
+6. Hacer push a `main` para disparar el deploy.
+7. El sitio quedará accesible en `https://USUARIO.github.io/` o en el dominio del repositorio de páginas.
 
 ## Recomendaciones de privacidad
 
@@ -57,7 +95,8 @@ Guardar el banner con este nombre exacto:
 
 - Para actualizar comunicados o actividades, editar directamente `index.html`.
 - Para cambios visuales, editar `styles.css`.
-- Para links y contactos, editar `script.js`.
+- Para configuración local, editar `config.js`.
+- Para producción segura, actualizar Variables/Secrets del repo y volver a desplegar.
 
 ---
 

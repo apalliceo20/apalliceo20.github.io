@@ -1,0 +1,110 @@
+name: Deploy GitHub Pages
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Generate runtime config.js from repo variables/secrets
+        env:
+          EMAIL_APAL: ${{ vars.EMAIL_APAL }}
+          INSTAGRAM_APAL: ${{ vars.INSTAGRAM_APAL }}
+          LINK_COMUNIDAD_WHATSAPP: ${{ vars.LINK_COMUNIDAD_WHATSAPP }}
+          LINK_GOOGLE_GROUPS_FAMILIAS: ${{ vars.LINK_GOOGLE_GROUPS_FAMILIAS }}
+          LINK_FORMULARIO_REGISTRO_FAMILIAS: ${{ vars.LINK_FORMULARIO_REGISTRO_FAMILIAS }}
+          LINK_FORMULARIO_VOLUNTARIOS: ${{ vars.LINK_FORMULARIO_VOLUNTARIOS }}
+          LINK_FORMULARIO_APORTES: ${{ vars.LINK_FORMULARIO_APORTES }}
+          LINK_FORMULARIO_CONTACTO: ${{ vars.LINK_FORMULARIO_CONTACTO }}
+          LINK_CARPETA_RENDICIONES_DRIVE: ${{ vars.LINK_CARPETA_RENDICIONES_DRIVE }}
+          BROU_ACCOUNT_NUMBER: ${{ secrets.BROU_ACCOUNT_NUMBER }}
+          BROU_ACCOUNT_OWNER: ${{ vars.BROU_ACCOUNT_OWNER }}
+          OFFICIAL_SITE_URL: ${{ vars.OFFICIAL_SITE_URL }}
+          OFFICIAL_INSTAGRAM_URL: ${{ vars.OFFICIAL_INSTAGRAM_URL }}
+          TRUSTED_HOSTS_JSON: ${{ vars.TRUSTED_HOSTS_JSON }}
+          HIDE_ACCOUNT_ON_UNTRUSTED_HOST: ${{ vars.HIDE_ACCOUNT_ON_UNTRUSTED_HOST }}
+          ENFORCE_HTTPS: ${{ vars.ENFORCE_HTTPS }}
+          MONTHLY_VERIFICATION_CODE: ${{ secrets.MONTHLY_VERIFICATION_CODE }}
+          MONTHLY_VERIFICATION_MONTH: ${{ vars.MONTHLY_VERIFICATION_MONTH }}
+        run: |
+          EMAIL_APAL="${EMAIL_APAL:-[EMAIL_APAL]}"
+          INSTAGRAM_APAL="${INSTAGRAM_APAL:-[INSTAGRAM_APAL]}"
+          LINK_COMUNIDAD_WHATSAPP="${LINK_COMUNIDAD_WHATSAPP:-#}"
+          LINK_GOOGLE_GROUPS_FAMILIAS="${LINK_GOOGLE_GROUPS_FAMILIAS:-#}"
+          LINK_FORMULARIO_REGISTRO_FAMILIAS="${LINK_FORMULARIO_REGISTRO_FAMILIAS:-#}"
+          LINK_FORMULARIO_VOLUNTARIOS="${LINK_FORMULARIO_VOLUNTARIOS:-#}"
+          LINK_FORMULARIO_APORTES="${LINK_FORMULARIO_APORTES:-#}"
+          LINK_FORMULARIO_CONTACTO="${LINK_FORMULARIO_CONTACTO:-#}"
+          LINK_CARPETA_RENDICIONES_DRIVE="${LINK_CARPETA_RENDICIONES_DRIVE:-#}"
+          BROU_ACCOUNT_NUMBER="${BROU_ACCOUNT_NUMBER:-[NUMERO_CUENTA_BROU]}"
+          BROU_ACCOUNT_OWNER="${BROU_ACCOUNT_OWNER:-APAL Liceo 20}"
+          OFFICIAL_SITE_URL="${OFFICIAL_SITE_URL:-https://apalliceo20.github.io}"
+          OFFICIAL_INSTAGRAM_URL="${OFFICIAL_INSTAGRAM_URL:-https://instagram.com/apalliceo20}"
+          TRUSTED_HOSTS_JSON="${TRUSTED_HOSTS_JSON:-[\"apalliceo20.github.io\",\"localhost\",\"127.0.0.1\"]}"
+          HIDE_ACCOUNT_ON_UNTRUSTED_HOST="${HIDE_ACCOUNT_ON_UNTRUSTED_HOST:-true}"
+          ENFORCE_HTTPS="${ENFORCE_HTTPS:-true}"
+          MONTHLY_VERIFICATION_CODE="${MONTHLY_VERIFICATION_CODE:-[CODIGO_VERIFICACION_MENSUAL]}"
+          MONTHLY_VERIFICATION_MONTH="${MONTHLY_VERIFICATION_MONTH:-Mayo 2026}"
+
+          cat > config.js <<EOF
+          window.__APAL_CONFIG__ = {
+            SITE_LINKS: {
+              EMAIL_APAL: "${EMAIL_APAL}",
+              INSTAGRAM_APAL: "${INSTAGRAM_APAL}",
+              LINK_COMUNIDAD_WHATSAPP: "${LINK_COMUNIDAD_WHATSAPP}",
+              LINK_GOOGLE_GROUPS_FAMILIAS: "${LINK_GOOGLE_GROUPS_FAMILIAS}",
+              LINK_FORMULARIO_REGISTRO_FAMILIAS: "${LINK_FORMULARIO_REGISTRO_FAMILIAS}",
+              LINK_FORMULARIO_VOLUNTARIOS: "${LINK_FORMULARIO_VOLUNTARIOS}",
+              LINK_FORMULARIO_APORTES: "${LINK_FORMULARIO_APORTES}",
+              LINK_FORMULARIO_CONTACTO: "${LINK_FORMULARIO_CONTACTO}",
+              LINK_CARPETA_RENDICIONES_DRIVE: "${LINK_CARPETA_RENDICIONES_DRIVE}",
+            },
+            DONATION_INFO: {
+              BROU_ACCOUNT_NUMBER: "${BROU_ACCOUNT_NUMBER}",
+              BROU_ACCOUNT_OWNER: "${BROU_ACCOUNT_OWNER}",
+            },
+            SECURITY_CONFIG: {
+              OFFICIAL_SITE_URL: "${OFFICIAL_SITE_URL}",
+              OFFICIAL_INSTAGRAM_URL: "${OFFICIAL_INSTAGRAM_URL}",
+              TRUSTED_HOSTS: ${TRUSTED_HOSTS_JSON},
+              HIDE_ACCOUNT_ON_UNTRUSTED_HOST: ${HIDE_ACCOUNT_ON_UNTRUSTED_HOST},
+              ENFORCE_HTTPS: ${ENFORCE_HTTPS},
+              MONTHLY_VERIFICATION_CODE: "${MONTHLY_VERIFICATION_CODE}",
+              MONTHLY_VERIFICATION_MONTH: "${MONTHLY_VERIFICATION_MONTH}",
+            },
+          };
+          EOF
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

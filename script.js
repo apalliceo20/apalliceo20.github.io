@@ -1,31 +1,51 @@
-// Valores editables para enlaces y canales oficiales de APAL.
-const SITE_LINKS = {
-  EMAIL_APAL: "apal.liceo20.joaquintorresgarcia@gmail.com",
-  INSTAGRAM_APAL: "https://instagram.com/apalliceo20",
+// Defaults seguros. Los valores reales se inyectan por config.js en runtime.
+const DEFAULT_SITE_LINKS = {
+  EMAIL_APAL: "[EMAIL_APAL]",
+  INSTAGRAM_APAL: "[INSTAGRAM_APAL]",
   LINK_COMUNIDAD_WHATSAPP: "#",
   LINK_GOOGLE_GROUPS_FAMILIAS: "#",
-  LINK_FORMULARIO_REGISTRO_FAMILIAS: "https://forms.gle/ooqPR1YevR6ezPcj9",
-  LINK_FORMULARIO_VOLUNTARIOS: "https://forms.gle/cNu3qokjgbiciMjz5",
-  LINK_FORMULARIO_APORTES: "https://forms.gle/4tnmq15Fd7Cetu4W7",
+  LINK_FORMULARIO_REGISTRO_FAMILIAS: "#",
+  LINK_FORMULARIO_VOLUNTARIOS: "#",
+  LINK_FORMULARIO_APORTES: "#",
   LINK_FORMULARIO_CONTACTO: "#",
   LINK_CARPETA_RENDICIONES_DRIVE: "#",
 };
 
-// Datos editables para mostrar canales de aporte economico.
-const DONATION_INFO = {
+const DEFAULT_DONATION_INFO = {
   BROU_ACCOUNT_NUMBER: "[NUMERO_CUENTA_BROU]",
   BROU_ACCOUNT_OWNER: "APAL Liceo 20",
 };
 
-// Configuracion de dominio oficial para reducir riesgos de suplantacion.
-const SECURITY_CONFIG = {
+const DEFAULT_SECURITY_CONFIG = {
   OFFICIAL_SITE_URL: "https://apalliceo20.github.io",
   OFFICIAL_INSTAGRAM_URL: "https://instagram.com/apalliceo20",
   TRUSTED_HOSTS: ["apalliceo20.github.io", "localhost", "127.0.0.1"],
   HIDE_ACCOUNT_ON_UNTRUSTED_HOST: true,
   ENFORCE_HTTPS: true,
-  MONTHLY_VERIFICATION_CODE: "APAL-2026-05",
+  MONTHLY_VERIFICATION_CODE: "[CODIGO_VERIFICACION_MENSUAL]",
   MONTHLY_VERIFICATION_MONTH: "Mayo 2026",
+};
+
+const RUNTIME_CONFIG =
+  typeof window !== "undefined" &&
+  window.__APAL_CONFIG__ &&
+  typeof window.__APAL_CONFIG__ === "object"
+    ? window.__APAL_CONFIG__
+    : {};
+
+const SITE_LINKS = {
+  ...DEFAULT_SITE_LINKS,
+  ...(RUNTIME_CONFIG.SITE_LINKS || {}),
+};
+
+const DONATION_INFO = {
+  ...DEFAULT_DONATION_INFO,
+  ...(RUNTIME_CONFIG.DONATION_INFO || {}),
+};
+
+const SECURITY_CONFIG = {
+  ...DEFAULT_SECURITY_CONFIG,
+  ...(RUNTIME_CONFIG.SECURITY_CONFIG || {}),
 };
 
 function applyEditableLinks() {
