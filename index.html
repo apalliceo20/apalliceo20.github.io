@@ -11,19 +11,72 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+    <svg aria-hidden="true" class="icon-sprite">
+      <symbol id="i-home" viewBox="0 0 24 24">
+        <path d="M3 10.5 12 3l9 7.5V21h-6v-6H9v6H3z" fill="currentColor" />
+      </symbol>
+      <symbol id="i-group" viewBox="0 0 24 24">
+        <path
+          d="M16 11a4 4 0 1 0-2.8-6.85A4 4 0 0 0 16 11ZM8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm0 2c-3 0-6 1.4-6 4.2V21h12v-2.8C14 15.4 11 14 8 14Zm8 0c-.8 0-1.6.1-2.3.3a5.3 5.3 0 0 1 2.3 3.9V21h6v-2.8c0-2.8-3-4.2-6-4.2Z"
+          fill="currentColor"
+        />
+      </symbol>
+      <symbol id="i-heart" viewBox="0 0 24 24">
+        <path
+          d="M12 21s-7.2-4.5-9.5-8A5.6 5.6 0 0 1 12 6a5.6 5.6 0 0 1 9.5 7c-2.3 3.5-9.5 8-9.5 8Z"
+          fill="currentColor"
+        />
+      </symbol>
+      <symbol id="i-tools" viewBox="0 0 24 24">
+        <path
+          d="M22 7.5a5.5 5.5 0 0 1-6.7 5.4L7.2 21 3 16.8l8-8.1A5.5 5.5 0 0 1 16.5 2l-2.2 2.2 1.5 1.5L18 3.5A5.5 5.5 0 0 1 22 7.5Z"
+          fill="currentColor"
+        />
+      </symbol>
+      <symbol id="i-volunteer" viewBox="0 0 24 24">
+        <path
+          d="M12 11a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9Zm0 2c-4.5 0-8 2-8 5.2V22h16v-3.8c0-3.2-3.5-5.2-8-5.2Z"
+          fill="currentColor"
+        />
+      </symbol>
+      <symbol id="i-news" viewBox="0 0 24 24">
+        <path
+          d="M4 4h14a2 2 0 0 1 2 2v11a3 3 0 0 0 3 3H7a3 3 0 0 1-3-3V4Zm4 4v2h8V8H8Zm0 4v2h8v-2H8Zm-4 5a1 1 0 1 0 2 0v-1H4v1Z"
+          fill="currentColor"
+        />
+      </symbol>
+      <symbol id="i-money" viewBox="0 0 24 24">
+        <path
+          d="M3 6h18v12H3V6Zm3 2a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h12a2 2 0 0 1 2-2v-4a2 2 0 0 1-2-2H6Zm6 1.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Z"
+          fill="currentColor"
+        />
+      </symbol>
+      <symbol id="i-calendar" viewBox="0 0 24 24">
+        <path
+          d="M7 2h2v3H7V2Zm8 0h2v3h-2V2ZM4 5h16a1 1 0 0 1 1 1v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a1 1 0 0 1 1-1Zm1 6v9h14v-9H5Z"
+          fill="currentColor"
+        />
+      </symbol>
+      <symbol id="i-contact" viewBox="0 0 24 24">
+        <path
+          d="M4 5h16a2 2 0 0 1 2 2v10l-4-3H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Zm2 3v2h12V8H6Z"
+          fill="currentColor"
+        />
+      </symbol>
+      <symbol id="i-alert" viewBox="0 0 24 24">
+        <path
+          d="M12 2 1 21h22L12 2Zm1 14h-2v-2h2v2Zm0-4h-2V8h2v4Z"
+          fill="currentColor"
+        />
+      </symbol>
+    </svg>
+
     <header class="site-header" id="inicio">
       <img
         class="header-banner"
         src="assets/banner-apal-liceo20.png"
         alt="Banner institucional de APAL Liceo 20"
       />
-
-      <div class="brand-wrap container">
-        <div>
-          <h1>APAL Liceo 20</h1>
-          <p class="subtitle">Asociación de Padres de Alumnos</p>
-        </div>
-      </div>
 
       <nav class="site-nav" aria-label="Navegación principal">
         <div class="container nav-inner">
@@ -36,22 +89,73 @@
             Menú
           </button>
           <ul id="navLinks">
-            <li><a href="#inicio">Inicio</a></li>
-            <li><a href="#quienes-somos">Quiénes somos</a></li>
-            <li><a href="#colaborar">Cómo colaborar</a></li>
-            <li><a href="#voluntariado">Voluntariado</a></li>
-            <li><a href="#comunicados">Comunicados</a></li>
-            <li><a href="#rendicion">Rendición de cuentas</a></li>
-            <li><a href="#actividades">Actividades</a></li>
-            <li><a href="#contacto">Contacto</a></li>
+            <li>
+              <a href="#inicio"
+                ><svg class="icon" aria-hidden="true">
+                  <use href="#i-home"></use></svg
+                ><span>Inicio</span></a
+              >
+            </li>
+            <li>
+              <a href="#quienes-somos"
+                ><svg class="icon" aria-hidden="true">
+                  <use href="#i-group"></use></svg
+                ><span>Quiénes somos</span></a
+              >
+            </li>
+            <li>
+              <a href="#colaborar"
+                ><svg class="icon" aria-hidden="true">
+                  <use href="#i-heart"></use></svg
+                ><span>Cómo colaborar</span></a
+              >
+            </li>
+            <li>
+              <a href="#voluntariado"
+                ><svg class="icon" aria-hidden="true">
+                  <use href="#i-volunteer"></use></svg
+                ><span>Voluntariado</span></a
+              >
+            </li>
+            <li>
+              <a href="#comunicados"
+                ><svg class="icon" aria-hidden="true">
+                  <use href="#i-news"></use></svg
+                ><span>Comunicados</span></a
+              >
+            </li>
+            <li>
+              <a href="#rendicion"
+                ><svg class="icon" aria-hidden="true">
+                  <use href="#i-money"></use></svg
+                ><span>Rendición de cuentas</span></a
+              >
+            </li>
+            <li>
+              <a href="#actividades"
+                ><svg class="icon" aria-hidden="true">
+                  <use href="#i-calendar"></use></svg
+                ><span>Actividades</span></a
+              >
+            </li>
+            <li>
+              <a href="#contacto"
+                ><svg class="icon" aria-hidden="true">
+                  <use href="#i-contact"></use></svg
+                ><span>Contacto</span></a
+              >
+            </li>
           </ul>
         </div>
       </nav>
 
-      <p class="official-note container">
-        Este sitio corresponde a APAL Liceo 20 y no sustituye los canales
-        oficiales de Dirección del liceo.
-      </p>
+      <div class="official-note-wrap">
+        <p class="official-note container">
+          <svg class="icon" aria-hidden="true"><use href="#i-alert"></use></svg>
+          <strong>Aviso institucional:</strong> Este sitio corresponde a APAL
+          Liceo 20 y no sustituye los canales oficiales de Dirección del liceo.
+        </p>
+      </div>
     </header>
 
     <main>
@@ -65,14 +169,26 @@
             educativa.
           </p>
           <div class="cta-grid">
-            <a class="btn btn-primary" href="#colaborar">Quiero colaborar</a>
+            <a class="btn btn-primary" href="#colaborar"
+              ><svg class="icon" aria-hidden="true">
+                <use href="#i-heart"></use></svg
+              ><span>Quiero colaborar</span></a
+            >
             <a class="btn btn-primary" href="#voluntariado"
-              >Anotarme como voluntario</a
+              ><svg class="icon" aria-hidden="true">
+                <use href="#i-volunteer"></use></svg
+              ><span>Anotarme como voluntario</span></a
             >
             <a class="btn btn-secondary" href="#rendicion"
-              >Ver rendición de cuentas</a
+              ><svg class="icon" aria-hidden="true">
+                <use href="#i-money"></use></svg
+              ><span>Ver rendición de cuentas</span></a
             >
-            <a class="btn btn-secondary" href="#contacto">Contactar a APAL</a>
+            <a class="btn btn-secondary" href="#contacto"
+              ><svg class="icon" aria-hidden="true">
+                <use href="#i-contact"></use></svg
+              ><span>Contactar a APAL</span></a
+            >
           </div>
         </div>
       </section>

@@ -50,6 +50,19 @@ p {
   margin-inline: auto;
 }
 
+.icon-sprite {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.icon {
+  width: 1.05rem;
+  height: 1.05rem;
+  flex-shrink: 0;
+}
+
 .site-header {
   background: var(--white);
   border-bottom: 1px solid var(--gray-100);
@@ -57,23 +70,11 @@ p {
 
 .header-banner {
   width: 100%;
-  height: auto;
+  height: clamp(130px, 22vw, 220px);
   display: block;
   object-fit: contain;
-  background-color: var(--gray-100);
-}
-
-.brand-wrap {
-  padding: 1rem 0 0.75rem;
-}
-
-.brand-wrap h1 {
-  font-size: clamp(1.6rem, 5vw, 2.1rem);
-}
-
-.subtitle {
-  color: var(--gray-500);
-  margin-bottom: 0;
+  background: linear-gradient(180deg, #f8fbff 0%, #eef4fb 100%);
+  padding: 0.2rem 0;
 }
 
 .site-nav {
@@ -114,7 +115,9 @@ p {
 }
 
 #navLinks a {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 0.42rem;
   color: #f2f7fc;
   text-decoration: none;
   padding: 0.5rem 0;
@@ -126,11 +129,20 @@ p {
   color: #b9d9ff;
 }
 
+.official-note-wrap {
+  background: linear-gradient(90deg, #dceaf9 0%, #e9f2fb 100%);
+  border-top: 1px solid #c7d9ed;
+  border-bottom: 1px solid #c7d9ed;
+}
+
 .official-note {
+  display: flex;
+  align-items: center;
+  gap: 0.48rem;
   margin: 0;
-  padding: 0.75rem 0 1rem;
-  color: var(--gray-500);
-  font-size: 0.95rem;
+  padding: 0.85rem 0;
+  color: #123a5f;
+  font-size: 1rem;
 }
 
 .section {
@@ -273,7 +285,10 @@ th {
 }
 
 .btn {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
   text-decoration: none;
   font-family: "Montserrat", "Trebuchet MS", sans-serif;
   font-size: 0.95rem;
@@ -366,6 +381,10 @@ th {
     border-bottom: 0;
     padding: 0;
     font-size: 0.94rem;
+  }
+
+  .official-note {
+    justify-content: center;
   }
 
   .cta-grid {
