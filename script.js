@@ -17,6 +17,17 @@ const DONATION_INFO = {
   BROU_ACCOUNT_OWNER: "APAL Liceo 20",
 };
 
+// Configuracion de dominio oficial para reducir riesgos de suplantacion.
+const SECURITY_CONFIG = {
+  OFFICIAL_SITE_URL: "https://apalliceo20.github.io",
+  OFFICIAL_INSTAGRAM_URL: "https://instagram.com/apalliceo20",
+  TRUSTED_HOSTS: ["apalliceo20.github.io", "localhost", "127.0.0.1"],
+  HIDE_ACCOUNT_ON_UNTRUSTED_HOST: true,
+  ENFORCE_HTTPS: true,
+  MONTHLY_VERIFICATION_CODE: "APAL-2026-05",
+  MONTHLY_VERIFICATION_MONTH: "Mayo 2026",
+};
+
 function applyEditableLinks() {
   const externalNodes = document.querySelectorAll("[data-link-key]");
   externalNodes.forEach((node) => {
@@ -68,6 +79,9 @@ function applyEditableLinks() {
 function applyDonationInfo() {
   const accountNumber = document.getElementById("brouAccountNumber");
   const accountOwner = document.getElementById("brouAccountOwner");
+  const officialSiteUrl = document.getElementById("officialSiteUrl");
+  const verificationCode = document.getElementById("monthlyVerificationCode");
+  const verificationMonth = document.getElementById("verificationMonthLabel");
 
   if (accountNumber) {
     accountNumber.textContent = DONATION_INFO.BROU_ACCOUNT_NUMBER;
@@ -76,6 +90,122 @@ function applyDonationInfo() {
   if (accountOwner) {
     accountOwner.textContent = DONATION_INFO.BROU_ACCOUNT_OWNER;
   }
+
+  if (officialSiteUrl) {
+    officialSiteUrl.setAttribute("href", SECURITY_CONFIG.OFFICIAL_SITE_URL);
+    officialSiteUrl.textContent = SECURITY_CONFIG.OFFICIAL_SITE_URL;
+  }
+
+  if (verificationCode) {
+    verificationCode.textContent = SECURITY_CONFIG.MONTHLY_VERIFICATION_CODE;
+  }
+
+  if (verificationMonth) {
+    verificationMonth.textContent = SECURITY_CONFIG.MONTHLY_VERIFICATION_MONTH;
+  }
+}
+
+function isTrustedHost(hostname) {
+  const normalizedHost = hostname.toLowerCase();
+  return SECURITY_CONFIG.TRUSTED_HOSTS.some((trustedHost) => {
+    const normalizedTrusted = trustedHost.toLowerCase();
+    return (
+      normalizedHost === normalizedTrusted ||
+      normalizedHost.endsWith(`.${normalizedTrusted}`)
+    );
+  });
+}
+
+function applyDomainSecurityWarning() {
+  const currentHost = window.location.hostname;
+  const isTrustedDomain = isTrustedHost(currentHost);
+  const isLocalhost =
+    currentHost === "localhost" || currentHost === "127.0.0.1";
+  const isHttps = window.location.protocol === "https:";
+  const shouldWarnProtocol =
+    SECURITY_CONFIG.ENFORCE_HTTPS && !isHttps && !isLocalhost;
+
+  let isFramed = false;
+  try {
+    isFramed = window.top !== window.self;
+  } catch {
+    isFramed = true;
+  }
+
+  const warnings = [];
+  if (!isTrustedDomain) {
+    warnings.push(
+      `Este dominio no figura como oficial para APAL Liceo 20. Usá ${SECURITY_CONFIG.OFFICIAL_SITE_URL}.`,
+    );
+  }
+  if (shouldWarnProtocol) {
+    warnings.push("La conexión no está en HTTPS.");
+  }
+  if (isFramed) {
+    warnings.push(
+      "El sitio está embebido en otra página. Abrí la URL oficial directamente.",
+    );
+  }
+
+  if (warnings.length === 0) {
+    return;
+  }
+
+  const warning = document.createElement("div");
+  warning.className = "security-warning";
+  const warningText = document.createElement("p");
+  warningText.className = "container";
+  warningText.textContent = `Atención: ${warnings.join(" ")} Confirmá también el código mensual en ${SECURITY_CONFIG.OFFICIAL_INSTAGRAM_URL}.`;
+  warning.appendChild(warningText);
+  document.body.prepend(warning);
+  document.body.classList.add("untrusted-host");
+
+  if (
+    SECURITY_CONFIG.HIDE_ACCOUNT_ON_UNTRUSTED_HOST &&
+    (!isTrustedDomain || shouldWarnProtocol || isFramed)
+  ) {
+    const accountNumber = document.getElementById("brouAccountNumber");
+    const verificationCode = document.getElementById("monthlyVerificationCode");
+    if (accountNumber) {
+      accountNumber.textContent = "Validar por canales oficiales";
+    }
+    if (verificationCode) {
+      verificationCode.textContent = "Validar por canales oficiales";
+    }
+  }
+}
+
+function setupVerificationCodeCopy() {
+  const copyButton = document.getElementById("copyVerificationCode");
+  const verificationCode = document.getElementById("monthlyVerificationCode");
+
+  if (!copyButton || !verificationCode) {
+    return;
+  }
+
+  copyButton.addEventListener("click", async () => {
+    const code = verificationCode.textContent
+      ? verificationCode.textContent.trim()
+      : "";
+    if (!code) {
+      return;
+    }
+
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(code);
+      }
+      copyButton.textContent = "Copiado";
+      setTimeout(() => {
+        copyButton.textContent = "Copiar código";
+      }, 1200);
+    } catch {
+      copyButton.textContent = "Copiá manualmente";
+      setTimeout(() => {
+        copyButton.textContent = "Copiar código";
+      }, 1400);
+    }
+  });
 }
 
 function setupMobileMenu() {
@@ -108,5 +238,7 @@ function setCurrentYear() {
 
 applyEditableLinks();
 applyDonationInfo();
+applyDomainSecurityWarning();
+setupVerificationCodeCopy();
 setupMobileMenu();
 setCurrentYear();

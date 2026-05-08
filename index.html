@@ -3,9 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta
       name="description"
       content="APAL Liceo 20 - Asociación de Padres de Alumnos. Colaboración, voluntariado, comunicados y rendición de cuentas."
+    />
+    <meta property="og:url" content="https://apalliceo20.github.io" />
+    <meta property="og:site_name" content="APAL Liceo 20" />
+    <link rel="canonical" href="https://apalliceo20.github.io" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; img-src 'self' data:; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
     />
     <title>APAL Liceo 20 | Asociación de Padres de Alumnos</title>
     <link rel="stylesheet" href="styles.css" />
@@ -72,6 +80,12 @@
       <symbol id="i-alert" viewBox="0 0 24 24">
         <path
           d="M12 2 1 21h22L12 2Zm1 14h-2v-2h2v2Zm0-4h-2V8h2v4Z"
+          fill="currentColor"
+        />
+      </symbol>
+      <symbol id="i-shield" viewBox="0 0 24 24">
+        <path
+          d="M12 2 4 5v7c0 5.2 3.3 9.9 8 11 4.7-1.1 8-5.8 8-11V5l-8-3Zm-1 13-3-3 1.4-1.4L11 12.2l3.6-3.6L16 10l-5 5Z"
           fill="currentColor"
         />
       </symbol>
@@ -194,6 +208,50 @@
             <p class="quick-donation-meta">
               Titular: <strong id="brouAccountOwner">APAL Liceo 20</strong>
             </p>
+            <p class="site-verification">
+              Sitio oficial:
+              <a
+                id="officialSiteUrl"
+                href="https://apalliceo20.github.io"
+                target="_blank"
+                rel="noopener noreferrer"
+                >https://apalliceo20.github.io</a
+              >
+            </p>
+            <p class="site-verification-note">
+              Antes de transferir, verificá que la URL del navegador coincida
+              con el dominio oficial.
+            </p>
+            <div
+              class="verification-code-box"
+              aria-label="Código de verificación mensual"
+            >
+              <p class="verification-title">
+                <svg class="icon" aria-hidden="true">
+                  <use href="#i-shield"></use>
+                </svg>
+                Código de verificación del mes
+              </p>
+              <p class="verification-code-row">
+                <strong id="monthlyVerificationCode"
+                  >[CODIGO_VERIFICACION_MENSUAL]</strong
+                >
+                <button
+                  class="copy-code-btn"
+                  id="copyVerificationCode"
+                  type="button"
+                >
+                  Copiar código
+                </button>
+              </p>
+              <p class="verification-month">
+                Vigente: <span id="verificationMonthLabel">Mayo 2026</span>
+              </p>
+              <p class="verification-help">
+                Confirmá que este mismo código figure también en el Instagram
+                oficial antes de transferir.
+              </p>
+            </div>
             <ul class="payment-methods">
               <li>Transferencia Bancaria (BROU, etc)</li>
               <li>Depósito en Redpagos/Abitab</li>
