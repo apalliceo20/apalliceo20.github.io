@@ -339,7 +339,7 @@ body.untrusted-host .quick-donation {
   position: fixed;
   inset: 0;
   z-index: 90;
-  display: grid;
+  display: none;
   place-items: center;
   background: rgba(12, 24, 38, 0.7);
   padding: 1rem;
@@ -347,6 +347,10 @@ body.untrusted-host .quick-donation {
 
 .modal-backdrop[hidden] {
   display: none !important;
+}
+
+.modal-backdrop.is-open {
+  display: grid;
 }
 
 .pdf-modal {

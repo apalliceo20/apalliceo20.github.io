@@ -241,15 +241,23 @@ function setupComunicadosModal() {
     return;
   }
 
-  // Estado seguro por defecto: modal cerrado al iniciar.
-  backdrop.hidden = true;
-  document.body.classList.remove("modal-open");
-
   const closeModal = () => {
     backdrop.hidden = true;
+    backdrop.classList.remove("is-open");
     frame.setAttribute("src", "");
     document.body.classList.remove("modal-open");
   };
+
+  const openModal = (modalTitle, previewUrl) => {
+    title.textContent = modalTitle;
+    frame.setAttribute("src", previewUrl);
+    backdrop.hidden = false;
+    backdrop.classList.add("is-open");
+    document.body.classList.add("modal-open");
+  };
+
+  // Estado seguro por defecto: modal cerrado al iniciar.
+  closeModal();
 
   closeButton.addEventListener("click", closeModal);
 
@@ -287,12 +295,13 @@ function setupComunicadosModal() {
         return;
       }
 
-      title.textContent = link.getAttribute("data-title") || "Comunicado";
-      frame.setAttribute("src", previewUrl);
-      backdrop.hidden = false;
-      document.body.classList.add("modal-open");
+      openModal(link.getAttribute("data-title") || "Comunicado", previewUrl);
     });
   });
+
+  // En algunas restauraciones de pestaña/caché, forzar cierre inicial evita que aparezca abierto.
+  window.addEventListener("load", closeModal);
+  window.addEventListener("pageshow", closeModal);
 }
 
 function setCurrentYear() {
