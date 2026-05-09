@@ -22,8 +22,6 @@ const DEFAULT_SECURITY_CONFIG = {
   TRUSTED_HOSTS: ["apalliceo20.github.io", "localhost", "127.0.0.1"],
   HIDE_ACCOUNT_ON_UNTRUSTED_HOST: true,
   ENFORCE_HTTPS: true,
-  MONTHLY_VERIFICATION_CODE: "[CODIGO_VERIFICACION_MENSUAL]",
-  MONTHLY_VERIFICATION_MONTH: "Mayo 2026",
 };
 
 const RUNTIME_CONFIG =
@@ -100,8 +98,6 @@ function applyDonationInfo() {
   const accountNumber = document.getElementById("brouAccountNumber");
   const accountOwner = document.getElementById("brouAccountOwner");
   const officialSiteUrl = document.getElementById("officialSiteUrl");
-  const verificationCode = document.getElementById("monthlyVerificationCode");
-  const verificationMonth = document.getElementById("verificationMonthLabel");
 
   if (accountNumber) {
     accountNumber.textContent = DONATION_INFO.BROU_ACCOUNT_NUMBER;
@@ -114,14 +110,6 @@ function applyDonationInfo() {
   if (officialSiteUrl) {
     officialSiteUrl.setAttribute("href", SECURITY_CONFIG.OFFICIAL_SITE_URL);
     officialSiteUrl.textContent = SECURITY_CONFIG.OFFICIAL_SITE_URL;
-  }
-
-  if (verificationCode) {
-    verificationCode.textContent = SECURITY_CONFIG.MONTHLY_VERIFICATION_CODE;
-  }
-
-  if (verificationMonth) {
-    verificationMonth.textContent = SECURITY_CONFIG.MONTHLY_VERIFICATION_MONTH;
   }
 }
 
@@ -175,7 +163,7 @@ function applyDomainSecurityWarning() {
   warning.className = "security-warning";
   const warningText = document.createElement("p");
   warningText.className = "container";
-  warningText.textContent = `Atención: ${warnings.join(" ")} Confirmá también el código mensual en ${SECURITY_CONFIG.OFFICIAL_INSTAGRAM_URL}.`;
+  warningText.textContent = `Atención: ${warnings.join(" ")} Confirmá la información únicamente por canales oficiales: ${SECURITY_CONFIG.OFFICIAL_INSTAGRAM_URL}.`;
   warning.appendChild(warningText);
   document.body.prepend(warning);
   document.body.classList.add("untrusted-host");
@@ -185,47 +173,10 @@ function applyDomainSecurityWarning() {
     (!isTrustedDomain || shouldWarnProtocol || isFramed)
   ) {
     const accountNumber = document.getElementById("brouAccountNumber");
-    const verificationCode = document.getElementById("monthlyVerificationCode");
     if (accountNumber) {
       accountNumber.textContent = "Validar por canales oficiales";
     }
-    if (verificationCode) {
-      verificationCode.textContent = "Validar por canales oficiales";
-    }
   }
-}
-
-function setupVerificationCodeCopy() {
-  const copyButton = document.getElementById("copyVerificationCode");
-  const verificationCode = document.getElementById("monthlyVerificationCode");
-
-  if (!copyButton || !verificationCode) {
-    return;
-  }
-
-  copyButton.addEventListener("click", async () => {
-    const code = verificationCode.textContent
-      ? verificationCode.textContent.trim()
-      : "";
-    if (!code) {
-      return;
-    }
-
-    try {
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        await navigator.clipboard.writeText(code);
-      }
-      copyButton.textContent = "Copiado";
-      setTimeout(() => {
-        copyButton.textContent = "Copiar código";
-      }, 1200);
-    } catch {
-      copyButton.textContent = "Copiá manualmente";
-      setTimeout(() => {
-        copyButton.textContent = "Copiar código";
-      }, 1400);
-    }
-  });
 }
 
 function setupMobileMenu() {
@@ -259,6 +210,5 @@ function setCurrentYear() {
 applyEditableLinks();
 applyDonationInfo();
 applyDomainSecurityWarning();
-setupVerificationCodeCopy();
 setupMobileMenu();
 setCurrentYear();

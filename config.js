@@ -22,7 +22,5 @@ window.__APAL_CONFIG__ = {
     TRUSTED_HOSTS: ["apalliceo20.github.io", "localhost", "127.0.0.1"],
     HIDE_ACCOUNT_ON_UNTRUSTED_HOST: true,
     ENFORCE_HTTPS: true,
-    MONTHLY_VERIFICATION_CODE: "[CODIGO_VERIFICACION_MENSUAL]",
-    MONTHLY_VERIFICATION_MONTH: "Mayo 2026",
   },
 };

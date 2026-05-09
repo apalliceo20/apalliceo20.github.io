@@ -41,12 +41,10 @@ Variables (Repository variables):
 - `TRUSTED_HOSTS_JSON` (ejemplo: `["apalliceo20.github.io","localhost","127.0.0.1"]`)
 - `HIDE_ACCOUNT_ON_UNTRUSTED_HOST` (`true` o `false`)
 - `ENFORCE_HTTPS` (`true` o `false`)
-- `MONTHLY_VERIFICATION_MONTH` (ejemplo: `Mayo 2026`)
 
 Secrets (Repository secrets):
 
 - `BROU_ACCOUNT_NUMBER`
-- `MONTHLY_VERIFICATION_CODE`
 
 Ejemplo de `config.js` local:
 
@@ -58,9 +56,6 @@ window.__APAL_CONFIG__ = {
   },
   DONATION_INFO: {
     BROU_ACCOUNT_NUMBER: "[NUMERO_CUENTA_BROU]",
-  },
-  SECURITY_CONFIG: {
-    MONTHLY_VERIFICATION_CODE: "[CODIGO_VERIFICACION_MENSUAL]",
   },
 };
 ```
