@@ -325,6 +325,83 @@ body.untrusted-host .quick-donation {
   font-weight: 700;
 }
 
+.text-link.is-disabled {
+  color: #6c7786;
+  cursor: not-allowed;
+  text-decoration: none;
+}
+
+.volunteer-actions {
+  margin-top: 1rem;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: grid;
+  place-items: center;
+  background: rgba(12, 24, 38, 0.7);
+  padding: 1rem;
+}
+
+.pdf-modal {
+  width: min(100%, 980px);
+  max-height: 92vh;
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1px solid #ccdaeb;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.25);
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+.pdf-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid #d8e3ef;
+  background: #f4f8fd;
+}
+
+.pdf-modal-header h3 {
+  margin: 0;
+  font-size: 1.02rem;
+}
+
+.pdf-modal-close {
+  border: 1px solid #b6cbe2;
+  background: #ffffff;
+  color: #1d4369;
+  border-radius: 8px;
+  font-family: "Montserrat", "Trebuchet MS", sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.35rem 0.65rem;
+  cursor: pointer;
+}
+
+.pdf-modal-close:hover {
+  background: #eef4fb;
+}
+
+.pdf-modal-body {
+  min-height: 62vh;
+}
+
+.pdf-modal-body iframe {
+  width: 100%;
+  height: 100%;
+  min-height: 62vh;
+  border: 0;
+}
+
+body.modal-open {
+  overflow: hidden;
+}
+
 .table-wrap {
   width: 100%;
   overflow-x: auto;

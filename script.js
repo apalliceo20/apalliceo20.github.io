@@ -9,6 +9,9 @@ const DEFAULT_SITE_LINKS = {
   LINK_FORMULARIO_APORTES: "#",
   LINK_FORMULARIO_CONTACTO: "#",
   LINK_CARPETA_RENDICIONES_DRIVE: "#",
+  LINK_COMUNICADO_1_PDF: "#",
+  LINK_COMUNICADO_2_PDF: "#",
+  LINK_COMUNICADO_3_PDF: "#",
 };
 
 const DEFAULT_DONATION_INFO = {
@@ -200,6 +203,96 @@ function setupMobileMenu() {
   });
 }
 
+function buildEmbeddablePdfUrl(url) {
+  if (!url || url === "#") {
+    return "";
+  }
+
+  const normalized = url.trim();
+  const filePathMatch = normalized.match(
+    /drive\.google\.com\/file\/d\/([^/]+)/i,
+  );
+  if (filePathMatch && filePathMatch[1]) {
+    return `https://drive.google.com/file/d/${filePathMatch[1]}/preview`;
+  }
+
+  const openIdMatch = normalized.match(/[?&]id=([^&]+)/i);
+  if (
+    normalized.includes("drive.google.com/open") &&
+    openIdMatch &&
+    openIdMatch[1]
+  ) {
+    return `https://drive.google.com/file/d/${openIdMatch[1]}/preview`;
+  }
+
+  return normalized;
+}
+
+function setupComunicadosModal() {
+  const backdrop = document.getElementById("pdfModalBackdrop");
+  const frame = document.getElementById("pdfModalFrame");
+  const title = document.getElementById("pdfModalTitle");
+  const closeButton = document.getElementById("pdfModalClose");
+  const comunicadoLinks = document.querySelectorAll(
+    ".comunicado-link[data-link-key]",
+  );
+
+  if (
+    !backdrop ||
+    !frame ||
+    !title ||
+    !closeButton ||
+    comunicadoLinks.length === 0
+  ) {
+    return;
+  }
+
+  const closeModal = () => {
+    backdrop.hidden = true;
+    frame.setAttribute("src", "");
+    document.body.classList.remove("modal-open");
+  };
+
+  comunicadoLinks.forEach((link) => {
+    const key = link.getAttribute("data-link-key");
+    const configuredUrl = key ? SITE_LINKS[key] : "";
+
+    if (!configuredUrl || configuredUrl === "#") {
+      link.classList.add("is-disabled");
+      link.setAttribute("aria-disabled", "true");
+      return;
+    }
+
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+
+      const previewUrl = buildEmbeddablePdfUrl(configuredUrl);
+      if (!previewUrl) {
+        return;
+      }
+
+      title.textContent = link.getAttribute("data-title") || "Comunicado";
+      frame.setAttribute("src", previewUrl);
+      backdrop.hidden = false;
+      document.body.classList.add("modal-open");
+    });
+  });
+
+  closeButton.addEventListener("click", closeModal);
+
+  backdrop.addEventListener("click", (event) => {
+    if (event.target === backdrop) {
+      closeModal();
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && !backdrop.hidden) {
+      closeModal();
+    }
+  });
+}
+
 function setCurrentYear() {
   const yearNode = document.getElementById("currentYear");
   if (yearNode) {
@@ -211,4 +304,5 @@ applyEditableLinks();
 applyDonationInfo();
 applyDomainSecurityWarning();
 setupMobileMenu();
+setupComunicadosModal();
 setCurrentYear();

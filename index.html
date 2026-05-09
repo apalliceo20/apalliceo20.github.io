@@ -13,7 +13,7 @@
     <link rel="canonical" href="https://apalliceo20.github.io" />
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; img-src 'self' data:; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
+      content="default-src 'self'; img-src 'self' data:; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self'; frame-src https://drive.google.com https://docs.google.com; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
     />
     <title>APAL Liceo 20 | Asociación de Padres de Alumnos</title>
     <link rel="stylesheet" href="styles.css" />
@@ -361,7 +361,7 @@
             <span>Otros</span>
           </div>
 
-          <div class="cta-inline">
+          <div class="cta-inline volunteer-actions">
             <a
               class="btn btn-primary external-link"
               data-link-key="LINK_FORMULARIO_VOLUNTARIOS"
@@ -387,7 +387,13 @@
               familias para mejorar la participación, la organización y la
               transparencia.
             </p>
-            <a class="text-link" href="#inicio">Leer comunicado</a>
+            <a
+              class="text-link comunicado-link"
+              data-link-key="LINK_COMUNICADO_1_PDF"
+              data-title="Bienvenida a las familias"
+              href="#"
+              >Leer comunicado</a
+            >
           </article>
 
           <article class="card news-card">
@@ -397,7 +403,13 @@
               Estamos armando una base de familias que quieran colaborar en
               jornadas, reparaciones, actividades y apoyo general.
             </p>
-            <a class="text-link" href="#voluntariado">Leer comunicado</a>
+            <a
+              class="text-link comunicado-link"
+              data-link-key="LINK_COMUNICADO_2_PDF"
+              data-title="Registro de voluntarios"
+              href="#"
+              >Leer comunicado</a
+            >
           </article>
 
           <article class="card news-card">
@@ -407,7 +419,13 @@
               APAL publicará periódicamente información sobre ingresos, egresos
               y destino de los fondos recaudados.
             </p>
-            <a class="text-link" href="#rendicion">Leer comunicado</a>
+            <a
+              class="text-link comunicado-link"
+              data-link-key="LINK_COMUNICADO_3_PDF"
+              data-title="Rendición de cuentas"
+              href="#"
+              >Leer comunicado</a
+            >
           </article>
         </div>
       </section>
@@ -617,6 +635,35 @@
         </div>
       </section>
     </main>
+
+    <div class="modal-backdrop" id="pdfModalBackdrop" hidden>
+      <section
+        class="pdf-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="pdfModalTitle"
+      >
+        <header class="pdf-modal-header">
+          <h3 id="pdfModalTitle">Comunicado</h3>
+          <button
+            class="pdf-modal-close"
+            id="pdfModalClose"
+            type="button"
+            aria-label="Cerrar"
+          >
+            Cerrar
+          </button>
+        </header>
+        <div class="pdf-modal-body">
+          <iframe
+            id="pdfModalFrame"
+            title="Visor de comunicado"
+            loading="lazy"
+            referrerpolicy="no-referrer"
+          ></iframe>
+        </div>
+      </section>
+    </div>
 
     <footer class="site-footer">
       <div class="container footer-content">
