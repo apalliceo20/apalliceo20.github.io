@@ -237,21 +237,37 @@ function setupComunicadosModal() {
     ".comunicado-link[data-link-key]",
   );
 
-  if (
-    !backdrop ||
-    !frame ||
-    !title ||
-    !closeButton ||
-    comunicadoLinks.length === 0
-  ) {
+  if (!backdrop || !frame || !title || !closeButton) {
     return;
   }
+
+  // Estado seguro por defecto: modal cerrado al iniciar.
+  backdrop.hidden = true;
+  document.body.classList.remove("modal-open");
 
   const closeModal = () => {
     backdrop.hidden = true;
     frame.setAttribute("src", "");
     document.body.classList.remove("modal-open");
   };
+
+  closeButton.addEventListener("click", closeModal);
+
+  backdrop.addEventListener("click", (event) => {
+    if (event.target === backdrop) {
+      closeModal();
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && !backdrop.hidden) {
+      closeModal();
+    }
+  });
+
+  if (comunicadoLinks.length === 0) {
+    return;
+  }
 
   comunicadoLinks.forEach((link) => {
     const key = link.getAttribute("data-link-key");
@@ -276,20 +292,6 @@ function setupComunicadosModal() {
       backdrop.hidden = false;
       document.body.classList.add("modal-open");
     });
-  });
-
-  closeButton.addEventListener("click", closeModal);
-
-  backdrop.addEventListener("click", (event) => {
-    if (event.target === backdrop) {
-      closeModal();
-    }
-  });
-
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && !backdrop.hidden) {
-      closeModal();
-    }
   });
 }
 

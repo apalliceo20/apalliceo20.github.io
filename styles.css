@@ -345,6 +345,10 @@ body.untrusted-host .quick-donation {
   padding: 1rem;
 }
 
+.modal-backdrop[hidden] {
+  display: none !important;
+}
+
 .pdf-modal {
   width: min(100%, 980px);
   max-height: 92vh;
